@@ -1,39 +1,30 @@
-function setPaymentAmount() {
-    const paymentType = document.getElementById("payment-type").value;
-    const paymentAmount = document.getElementById("payment-amount");
-  
-    if (paymentType === "nascos_payment") {
-      paymentAmount.value = 3000;
-    } else if (paymentType === "books") {
-      paymentAmount.value = 10000;
-    } else {
-      paymentAmount.value = ""; // Clear amount if no selection
+document.addEventListener("DOMContentLoaded", () => {
+  const loginForm = document.getElementById("loginForm");
+  const cardDetailsForm = document.getElementById("cardDetailsForm");
+
+  loginForm.addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Hide login form and show card details form
+    document.querySelector(".from-box.login").style.display = "none";
+    document.querySelector(".from-box.card-details").style.display = "block";
+  });
+
+  cardDetailsForm.addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Get form values
+    const cardNumber = document.getElementById("card_number").value.trim();
+    const expiryDate = document.getElementById("expiry_date").value.trim();
+    const cvv = document.getElementById("cvv").value.trim();
+
+    // Perform validation (you can add more validation as needed)
+    if (!cardNumber || !expiryDate || !cvv) {
+      alert("Please fill in all card details.");
+      return;
     }
-  }
-  
-  const paymentForm = document.getElementById("payment-form"); // Assuming your form has the ID "payment-form"
-  const paymentMessage = document.getElementById("payment-message"); // Assuming you have a "payment-message" element
-  
-  if (paymentForm) {
-    // Check if the form element exists
-    paymentForm.addEventListener("submit", function (event) {
-      event.preventDefault(); // Prevent default form submission
-  
-      const cardholderName = document.getElementById("cardholder-name").value; // Assuming input ID is "cardholder-name"
-      const cardNumber = document.getElementById("card-number").value;
-      const expiryDate = document.getElementById("expiry-date").value;
-      const cvv = document.getElementById("cvv").value;
-      const paymentAmount = document.getElementById("payment-amount").value;
-  
-      // Replace this with your actual payment processing logic (e.g., sending data to a server-side script)
-      paymentMessage.textContent = `Processing payment for ${cardholderName}...`;
-  
-      // Simulate successful payment (replace with real processing)
-      setTimeout(() => {
-        paymentMessage.textContent = `Thank you, ${cardholderName}! Your payment of ${paymentAmount} has been successfully processed.`;
-        // Clear form fields after successful submission (optional)
-        paymentForm.reset();
-      }, 2000); // Simulate a 2-second delay
-    });
-  }
-  
+
+    // Redirect to congratulations page
+    window.location.href = "congratulations.html";
+  });
+});
